@@ -1,48 +1,9 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Textos do Émerson</title>
+  <title>A Verdade - Émerson</title>
   <style>
     body {
       margin: 0;
@@ -52,29 +13,34 @@
       color: #e0e0e0;
       max-width: 800px;
       margin: 0 auto;
+      text-align: center;
     }
     h1 {
-      text-align: center;
       color: #ffffff;
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
     }
-    .intro {
-      text-align: center;
+    .subtitulo {
+      font-size: 1.2rem;
       margin-bottom: 2rem;
     }
-    a {
-      color: #1e90ff;
-      text-decoration: none;
+    button {
+      background-color: #2c3e50;
+      color: #e0e0e0;
+      border: none;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 5px;
     }
-    a:hover {
-      text-decoration: underline;
+    button:hover {
+      background-color: #34495e;
     }
   </style>
 </head>
 <body>
-  <h1>Textos do Émerson</h1>
-  <div class="intro">
-    <p>Bem-vindo ao meu espaço de reflexões! Aqui exploro ideias sobre autonomia, poder e existência. Clique abaixo para ler meus artigos.</p>
-    <p><a href="artigos.html">Ir para Artigos</a></p>
-  </div>
+  <h1>A VERDADE</h1>
+  <div class="subtitulo">Tens a capacidade de abrir sua mente?</div>
+  <button onclick="window.location.href='artigos.html'">Ir para Artigos</button>
 </body>
 </html>

@@ -33,12 +33,24 @@ main {
   padding: 2rem;
 }
 
-section {
-  margin-bottom: 2rem;
+#capa {
+  text-align: center;
 }
 
-h2 {
+#capa h2 {
   color: #2c3e50;
+}
+
+.artigo-link {
+  display: block;
+  margin: 1rem 0;
+  font-size: 1.2rem;
+  color: #2c3e50;
+  text-decoration: none;
+}
+
+.artigo-link:hover {
+  text-decoration: underline;
 }
 
 .texto-card {
@@ -53,9 +65,8 @@ footer {
   color: white;
   text-align: center;
   padding: 1rem;
-  position: fixed;
-  bottom: 0;
   width: 100%;
+  margin-top: 2rem;
 }
 
 @media (max-width: 600px) {
